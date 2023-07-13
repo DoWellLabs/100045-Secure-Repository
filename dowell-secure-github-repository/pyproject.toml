@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "dowell-secure-github-repository"
+version = "0.1.0"
+description = ""
+authors = ["George Minyillah Mensah <george.minyillah@ashesi.edu.gh>"]
+readme = "README.md"
+packages = [{include = "dowell_secure_github_repository"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
