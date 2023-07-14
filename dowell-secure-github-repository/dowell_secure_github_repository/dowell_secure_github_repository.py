@@ -102,18 +102,3 @@ class SecureRepositoryAPI:
 
         # # print(response.text)
         # return response.json()
-
-
-
-def __test():
-
-    me = SecureRepositoryAPI("1e3c8e7c-1225-4749-b390-203a6f0fbda2")
-    # me.clone_repository("https://github.com/HouariZegai/Calculator.git")
-
-    me.get_backup_reports()
-
-    me.get_repository_reports()
-
-
-if __name__ == "__main__":
-    __test()
