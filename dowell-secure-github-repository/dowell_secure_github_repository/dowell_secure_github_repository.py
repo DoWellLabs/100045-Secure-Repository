@@ -52,13 +52,15 @@ class doWellSecureGithubRepository:
 
 
         if response.status_code == 200:
-            print(
-                f"Success: {jsonResponse['success']}\n"
-                f"Message: {jsonResponse['messsage']}\n"
-                f"credits: {jsonResponse['credits']}\n"
-                f"Webhook URL: {jsonResponse['webhook_link']}\n"
-                f"Add the above wehhook URL to you GitHub respository Webhook\n"
-            )
+            
+            # print(
+            #     f"Success: {jsonResponse['success']}\n"
+            #     f"Message: {jsonResponse['messsage']}\n"
+            #     f"credits: {jsonResponse['credits']}\n"
+            #     f"Webhook URL: {jsonResponse['webhook_link']}\n"
+            #     f"Add the above wehhook URL to you GitHub respository Webhook\n"
+            # )
+            return jsonRespnse
         else:
             print("Operation was not successful")
 
@@ -81,26 +83,28 @@ class doWellSecureGithubRepository:
             return None
 
         if response.status_code == 200:
-            for idx, item in enumerate(data["data"]):
-                print(
-                    f"ID: {item['_id']}\n"
-                    f"Zip File Name: {item['zip_file_name']}\n"
-                    f"Backup Date and Time: {item['backup_time']}\n"
-                    f"Commit ID: {item['commit_id']}\n"
-                    f"Commit Message: {item['commit_message']}\n"
-                    f"Commit Url: {item['commit_url']}\n"
-                    f"File Url: {item['file_url']}\n"
-                )
-                if len(item["added_file"]) > 0:
-                    for AddedFile in item["added_file"]:
-                        print(f"Added File: {AddedFile}")
+            # for idx, item in enumerate(data["data"]):
+            #     print(
+            #         f"ID: {item['_id']}\n"
+            #         f"Zip File Name: {item['zip_file_name']}\n"
+            #         f"Backup Date and Time: {item['backup_time']}\n"
+            #         f"Commit ID: {item['commit_id']}\n"
+            #         f"Commit Message: {item['commit_message']}\n"
+            #         f"Commit Url: {item['commit_url']}\n"
+            #         f"File Url: {item['file_url']}\n"
+            #     )
+            #     if len(item["added_file"]) > 0:
+            #         for AddedFile in item["added_file"]:
+            #             print(f"Added File: {AddedFile}")
 
-                if len(item["removed_file"]) > 0:
-                    for removedFile in item["removed_file"]:
-                        print(f"Deleted File: {removedFile}")
-                if len(item["modified_file"]) > 0:
-                    for modifiedFile in item["modified_file"]:
-                        print(f"Modified File: {modifiedFile}\n")
+            #     if len(item["removed_file"]) > 0:
+            #         for removedFile in item["removed_file"]:
+            #             print(f"Deleted File: {removedFile}")
+            #     if len(item["modified_file"]) > 0:
+            #         for modifiedFile in item["modified_file"]:
+            #             print(f"Modified File: {modifiedFile}\n")
+
+            return data
         else:
             print("Operation was not successful")
 
@@ -122,17 +126,18 @@ class doWellSecureGithubRepository:
             print("Response content:", response.content)
             return None
         if response.status_code == 200:
-            print("Backup reports for repository generated successfully")
-            for idx, item in enumerate(data["data"]):
-                print(
-                    f"ID: {item['_id']}\n"
-                    f"Repository Name: {item['repository_name']}\n"
-                    f"Repository URL: {item['repository_url']}\n"
-                    f"Created By: {item['created_by']}\n"
-                    f"Registration Date: {item['date_of_registration']} \n"
-                    f"Registration Time: {item['time_of_registration']}\n"
-                    f"Webhook URL: {item['webhook_link']}\n"
-                )
+            # print("Backup reports for repository generated successfully")
+            # for idx, item in enumerate(data["data"]):
+            #     print(
+            #         f"ID: {item['_id']}\n"
+            #         f"Repository Name: {item['repository_name']}\n"
+            #         f"Repository URL: {item['repository_url']}\n"
+            #         f"Created By: {item['created_by']}\n"
+            #         f"Registration Date: {item['date_of_registration']} \n"
+            #         f"Registration Time: {item['time_of_registration']}\n"
+            #         f"Webhook URL: {item['webhook_link']}\n"
+            #     )
+            return data
         else:
             print("Operation was not successful")
 
