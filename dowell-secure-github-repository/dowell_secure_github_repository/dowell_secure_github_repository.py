@@ -1,13 +1,12 @@
 import requests
 import json
 
-
-class SecureRepositoryAPI:
+class doWellSecureGithubRepository:
     """
     A Python client for interacting with the Secure Repository API.
     This API enables easy cloning of repositories and provides functionality to retrieve backup and repository reports.
 
-    Usage:
+    Usage:s
     api = SecureRepositoryAPI(api_key)
     api.clone_repository(repository_url)
     api.get_backup_reports()
@@ -41,14 +40,27 @@ class SecureRepositoryAPI:
             "api_key": self.api_key,
         }
         headers = {}
+
         response = requests.request("POST", url=endpoint, headers=headers, data=payload)
+        try:
+            jsonResponse = response.json()
+            # print(jsonResponse)
+        except json.JSONDecodeError as e:
+            print("Error decoding JSON response:", e)
+            print("Response content:", response.content)
+            return None
+
 
         if response.status_code == 200:
-            print("GitHub repository cloned successfully")
+            print(
+                f"Success: {jsonResponse['success']}\n"
+                f"Message: {jsonResponse['messsage']}\n"
+                f"credits: {jsonResponse['credits']}\n"
+                f"Webhook URL: {jsonResponse['webhook_link']}\n"
+                f"Add the above wehhook URL to you GitHub respository Webhook\n"
+            )
         else:
             print("Operation was not successful")
-
-        return response.json()
 
     def get_backup_reports(self):
         """
@@ -60,9 +72,35 @@ class SecureRepositoryAPI:
         """
         endpoint = f"{self.BASE_URL}/reports/backup-reports/{self.api_key}/"
         response = requests.get(endpoint)
+    
+        try:
+            data = response.json()
+        except json.JSONDecodeError as e:
+            print("Error decoding JSON response:", e)
+            print("Response content:", response.content)
+            return None
 
         if response.status_code == 200:
-            print("Backup reports were generated successfully")
+            for idx, item in enumerate(data["data"]):
+                print(
+                    f"ID: {item['_id']}\n"
+                    f"Zip File Name: {item['zip_file_name']}\n"
+                    f"Backup Date and Time: {item['backup_time']}\n"
+                    f"Commit ID: {item['commit_id']}\n"
+                    f"Commit Message: {item['commit_message']}\n"
+                    f"Commit Url: {item['commit_url']}\n"
+                    f"File Url: {item['file_url']}\n"
+                )
+                if len(item["added_file"]) > 0:
+                    for AddedFile in item["added_file"]:
+                        print(f"Added File: {AddedFile}")
+
+                if len(item["removed_file"]) > 0:
+                    for removedFile in item["removed_file"]:
+                        print(f"Deleted File: {removedFile}")
+                if len(item["modified_file"]) > 0:
+                    for modifiedFile in item["modified_file"]:
+                        print(f"Modified File: {modifiedFile}\n")
         else:
             print("Operation was not successful")
 
@@ -74,31 +112,39 @@ class SecureRepositoryAPI:
         The reports provide information about registered repositories, including their name, URL, creator, and registration date.
 
         """
-        endpoint = f"{self.BASE_URL}/reports/repository-reports/{self.api_key}/"
+        endpoint = f"{self.BASE_URL}/reports/respository-reports/{self.api_key}/"
         response = requests.get(endpoint)
-        data = response.json()
 
+        try:
+            data = response.json()
+        except json.JSONDecodeError as e:
+            print("Error decoding JSON response:", e)
+            print("Response content:", response.content)
+            return None
         if response.status_code == 200:
             print("Backup reports for repository generated successfully")
             for idx, item in enumerate(data["data"]):
                 print(
+                    f"ID: {item['_id']}\n"
                     f"Repository Name: {item['repository_name']}\n"
                     f"Repository URL: {item['repository_url']}\n"
                     f"Created By: {item['created_by']}\n"
-                    f"Date and Time: {item['date_of_registration']} {item['time_of_registration']}"
+                    f"Registration Date: {item['date_of_registration']} \n"
+                    f"Registration Time: {item['time_of_registration']}\n"
+                    f"Webhook URL: {item['webhook_link']}\n"
                 )
         else:
             print("Operation was not successful")
 
 
-        
+def __test():
+    # me = doWellSecureGithubRepository("Your Api Key")
+    # me.clone_repository("Github repository URL")
 
-        
+    # me.get_backup_reports()
 
-        # finalOutput = json.loads(response)
+    # me.get_repository_reports()
 
-        # for key in finalOutput["data"]:
-        #     print( key, ":", finalOutput[ key ] )
 
-        # # print(response.text)
-        # return response.json()
+if __name__ == "__main__":
+    __test()
