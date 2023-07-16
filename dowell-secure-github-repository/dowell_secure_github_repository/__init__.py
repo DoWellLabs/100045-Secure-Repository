@@ -1,1 +1,1 @@
-from .dowell_secure_github_repository import SecureRepositoryAPI
+from .dowell_secure_github_repository import doWellSecureGithubRepository
